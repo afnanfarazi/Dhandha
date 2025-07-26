@@ -1,18 +1,91 @@
 <!DOCTYPE html>
-<html>
-<head><title>Signup</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup - Dhandha</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins:wght@600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: #0a9396;
+      color: #001219;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 20px;
+    }
+    form {
+      background-color: #e9d8a6;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 320px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #bb3e03;
+      border-radius: 5px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    select {
+      background-color: #fff;
+      color: #001219;
+    }
+    button {
+      background-color: #ca6702;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #bb3e03;
+    }
+    .switch {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+      width: 100%;
+    }
+    .switch a {
+      color: #001219;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .switch a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
 <body>
-<h2>Signup</h2>
-<form method="post">
-    <input type="text" name="name" placeholder="Full Name" required><br>
-    <input type="email" name="email" placeholder="Email" required><br>
-    <input type="password" name="password" placeholder="Password" required><br>
-    <select name="role">
-        <option value="user">User</option>
-        <option value="agency">Agency</option>
-    </select><br>
+  <h2>Signup for Dhandha</h2>
+  <form method="post">
+    <input type="text" name="name" placeholder="Full Name" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <select name="role" required>
+      <option value="" disabled selected>Select Role</option>
+      <option value="user">User</option>
+      <option value="agency">Agency</option>
+    </select>
     <button type="submit">Signup</button>
-</form>
-<a href="/login">Already have an account? Login</a>
+    <div class="switch">
+      Already have an account? <a href="/login">Login</a>
+    </div>
+  </form>
 </body>
 </html>

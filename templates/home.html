@@ -1,8 +1,178 @@
 <!DOCTYPE html>
-<html>
-<head><title>Dhandha - Home</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dhandha - Empowering Overseas Workers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+      background-color: #001219;
+      color: #e9d8a6;
+    }
+    header {
+      text-align: center;
+      padding: 60px 20px 20px;
+      background-color: #0a9396;
+      color: #fff;
+      position: relative;
+    }
+    header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 40px;
+      margin: 0 0 10px;
+    }
+    header p {
+      margin: 0;
+      font-size: 18px;
+    }
+    nav {
+      margin-top: 20px;
+    }
+    nav a {
+      margin: 0 10px;
+      color: #ee9b00;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    nav a:hover {
+      color: #bb3e03;
+    }
+    .section {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .section h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .feature-list, .job-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 0 10%;
+    }
+    .feature, .job-card {
+      background-color: #005f73;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+      color: #e9d8a6;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .job-card h3 {
+      font-family: 'Poppins', sans-serif;
+      color: #ee9b00;
+      margin: 0 0 10px;
+    }
+    .guides {
+      background-color: #0a9396;
+      padding-bottom: 40px;
+    }
+    .guides a {
+      color: #bb3e03;
+      text-decoration: underline;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    footer {
+      background-color: #001219;
+      color: #e9d8a6;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+    .lang-toggle {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+    }
+    .lang-toggle select {
+      background: #ca6702;
+      border: none;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
 <body>
-<h1>Welcome to Dhandha</h1>
-<a href="/signup">Signup</a> | <a href="/login">Login</a>
+  <header>
+    <div class="lang-toggle">
+      <select>
+        <option>English</option>
+        <option>বাংলা</option>
+      </select>
+    </div>
+    <h1>Welcome to Dhandha</h1>
+    <p>Your trusted platform to explore overseas job opportunities</p>
+        <nav>
+        {% if session.loggedin %}
+            <span>Welcome, {{ session.get('name', 'User') }} ({{ session.get('role')|capitalize }})!</span>
+            {% if session.role == 'agency' %}
+            <a href="/post-job">Post a Job</a>
+            <a href="/my-jobs">My Jobs</a>
+            {% elif session.role == 'user' %}
+            <a href="/my-applications">My Applications</a>
+            {% elif session.role == 'admin' %}
+            <a href="/admin/dashboard">Admin Dashboard</a>
+            {% endif %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/signup">Signup</a>
+        {% endif %}
+        <a href="#features">Features</a>
+        <a href="#jobs">Latest Jobs</a>
+        <a href="#guides">Guides</a>
+        </nav>
+  </header>
+
+  <section class="section" id="features">
+    <h2>Platform Features</h2>
+    <div class="feature-list">
+      <div class="feature">🔍 Search and Filter Jobs</div>
+      <div class="feature">🔔 Get Notifications for New Posts</div>
+      <div class="feature">📌 Bookmark Favorite Jobs</div>
+      <div class="feature">✅ Verified Agencies Only</div>
+      <div class="feature">💬 Query Directly to Agency</div>
+      <div class="feature">📈 Analytics for Agencies</div>
+      <div class="feature">📚 Guides on Visa, Process & More</div>
+      <div class="feature">📱 100% Mobile Responsive</div>
+    </div>
+  </section>
+
+  <section class="section" id="jobs">
+    <h2>Latest Jobs</h2>
+    <div class="job-list">
+      {% for job in jobs %}
+      <div class="job-card">
+        <h3>{{ job.title }}</h3>
+        <p><strong>Country:</strong> {{ job.country }}</p>
+        <p><strong>Salary:</strong> {{ job.salary }}</p>
+        <p><strong>Deadline:</strong> {{ job.deadline }}</p>
+        <p>{{ job.description[:150] }}...</p>
+      </div>
+      {% else %}
+      <p>No jobs posted yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section guides" id="guides">
+    <h2>Guides and Resources</h2>
+    <p>Not sure where to start? Read our step-by-step guides on how to apply for overseas jobs, understand visa requirements, and more.</p>
+    <a href="#">Browse Guides</a>
+  </section>
+
+  <footer>
+    &copy; 2025 Dhandha. All rights reserved.
+  </footer>
 </body>
 </html>
