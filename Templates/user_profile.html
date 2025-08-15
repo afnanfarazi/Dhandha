@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl md:text-5xl font-bold text-primary-color text-center mb-12 ubuntu-bold">My Profile</h1>
+    <div class="max-w-2xl mx-auto bg-light-accent-color rounded-lg shadow-md p-8">
+        <form action="{{ url_for('user_profile') }}" method="post" class="space-y-4">
+            <div>
+                <label for="firstname" class="block text-sm font-medium text-grey-color ubuntu-regular">First Name</label>
+                <input type="text" id="firstname" name="firstname" value="{{ user.firstname }}" class="mt-1 block w-full rounded-md border-grey-color shadow-sm" required>
+            </div>
+            <div>
+                <label for="lastname" class="block text-sm font-medium text-grey-color ubuntu-regular">Last Name</label>
+                <input type="text" id="lastname" name="lastname" value="{{ user.lastname }}" class="mt-1 block w-full rounded-md border-grey-color shadow-sm" required>
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-grey-color ubuntu-regular">Email</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" class="mt-1 block w-full rounded-md border-grey-color shadow-sm" required>
+            </div>
+            <div>
+                <label for="phone" class="block text-sm font-medium text-grey-color ubuntu-regular">Phone</label>
+                <input type="tel" id="phone" name="phone" value="{{ user.phone }}" class="mt-1 block w-full rounded-md border-grey-color shadow-sm" required>
+            </div>
+            <button type="submit" class="btn-primary w-full ubuntu-medium">Update Profile</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

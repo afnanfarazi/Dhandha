@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}Success Stories{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-12">
+    <h1 class="text-3xl font-bold text-primary-color text-center mb-10 ubuntu-bold">Success Stories</h1>
+
+    {% if g.user %}
+    <div class="bg-light-accent-color rounded-lg shadow-md p-8 mb-10 max-w-2xl mx-auto">
+        <h2 class="text-2xl font-bold text-tertiary-color mb-4 ubuntu-medium">Share Your Success Story</h2>
+        <form action="{{ url_for('success_stories') }}" method="post" class="space-y-4">
+            <div>
+                <label for="story" class="block text-sm font-medium text-grey-color ubuntu-regular">Your Story</label>
+                <textarea id="story" name="story" rows="4" class="mt-1 block w-full rounded-md border-grey-color shadow-sm" required></textarea>
+            </div>
+            <div>
+                <label for="rating" class="block text-sm font-medium text-grey-color ubuntu-regular">Rating (1-5)</label>
+                <input type="number" id="rating" name="rating" min="1" max="5" class="mt-1 block w-full rounded-md border-grey-color shadow-sm" required>
+            </div>
+            <button type="submit" class="btn-primary w-full ubuntu-medium">Submit Story</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for story in stories %}
+        <div class="bg-white rounded-lg shadow-md p-6 border border-light-accent-color">
+            <div class="flex justify-between items-center mb-4">
+                <p class="text-xl font-semibold text-primary-color poppins-regular">By {{ story.author }}</p>
+                <div class="flex items-center text-yellow-500">
+                    {% for _ in range(story.rating) %}
+                        <svg class="h-5 w-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.49 6.84l6.572-.955L10 0l2.938 5.885 6.572.955-4.755 4.636 1.123 6.545z"/></svg>
+                    {% endfor %}
+                </div>
+            </div>
+            <p class="text-grey-color mb-4 poppins-regular">{{ story.content }}</p>
+            <p class="text-sm text-tertiary-color poppins-regular">Posted on: {{ story.timestamp.strftime('%Y-%m-%d') }}</p>
+            
+            {# Check if the current user is the owner of this story #}
+            {% if g.user and (story.author_id == g.user.id or story.agency_id == g.user.id) %}
+                <div class="mt-4 flex space-x-2">
+                    <a href="{{ url_for('edit_story', story_id=story.id) }}" class="btn-primary text-sm px-3 py-1">Edit</a>
+                    <form action="{{ url_for('delete_story', story_id=story.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this story?');">
+                        <button type="submit" class="btn-secondary text-sm px-3 py-1">Delete</button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <p class="col-span-full text-center text-grey-color ubuntu-regular">No success stories have been posted yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

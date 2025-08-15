@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl md:text-5xl font-bold text-secondary-dark text-center mb-12">Admin Dashboard</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 text-center">
+        <div class="bg-primary-color-bg text-white-color-text p-6 rounded-lg shadow-md">
+            <p class="text-4xl font-bold">{{ analytics.users }}</p>
+            <p class="mt-2 text-lg">Total Users</p>
+        </div>
+        <div class="bg-secondary-color-bg text-white-color-text p-6 rounded-lg shadow-md">
+            <p class="text-4xl font-bold">{{ analytics.agencies }}</p>
+            <p class="mt-2 text-lg">Total Agencies</p>
+        </div>
+        <div class="bg-info-blue text-white-color-text p-6 rounded-lg shadow-md">
+            <p class="text-4xl font-bold">{{ analytics.jobs }}</p>
+            <p class="mt-2 text-lg">Total Jobs</p>
+        </div>
+    </div>
+    <div class="bg-white-color-bg rounded-lg shadow-md p-8 mb-8">
+        <h2 class="text-2xl font-semibold text-tertiary-color mb-6 ubuntu-medium">Pending Agency Applications</h2>
+        {% if pending_agencies %}
+        <ul class="space-y-4">
+            {% for agency in pending_agencies %}
+            <li class="flex justify-between items-center bg-light-accent-color rounded-md p-4">
+                <span class="text-lg font-medium text-tertiary-color ubuntu-regular">{{ agency.username }}</span>
+                <div class="space-x-2">
+                    <a href="{{ url_for('verify_agency', agency_id=agency.id) }}" class="btn-primary">Verify</a>
+                    <a href="{{ url_for('reject_agency', agency_id=agency.id) }}" class="btn-secondary">Reject</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-grey-color">No pending agency applications.</p>
+        {% endif %}
+    </div>
+    <div class="bg-white-color-bg rounded-lg shadow-md p-8 mb-8">
+        <h2 class="text-2xl font-semibold text-tertiary-color mb-6 ubuntu-medium">Registered Users</h2>
+        <ul class="space-y-2">
+            {% for user in registered_users %}
+            <li class="bg-gray-100 rounded-md p-3">
+                <span class="text-lg text-tertiary-color ubuntu-regular">{{ user.username }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="bg-white-color-bg rounded-lg shadow-md p-8">
+        <h2 class="text-2xl font-semibold text-tertiary-color mb-6 ubuntu-medium">Registered Agencies</h2>
+        <ul class="space-y-2">
+            {% for agency in registered_agencies %}
+            <li class="bg-gray-100 rounded-md p-3">
+                <span class="text-lg text-tertiary-color ubuntu-regular">{{ agency.username }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

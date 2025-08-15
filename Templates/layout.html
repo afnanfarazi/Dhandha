@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary-color: #780000;
+        --secondary-color: #c1121f;
+        --tertiary-color: #003049;
+        --light-accent-color: #669bbc;
+        --white-color: #fdf0d5;
+        --grey-color: #a4b3c7;
+        --nav-text-color: #D7D3D5;
+    }
+
+    .primary-color-bg { background-color: var(--primary-color); }
+    .secondary-color-bg { background-color: var(--secondary-color); }
+    .tertiary-color-bg { background-color: var(--tertiary-color); }
+    .light-accent-color-bg { background-color: var(--light-accent-color); }
+    .white-color-bg { background-color: var(--white-color); }
+    .grey-color-bg { background-color: var(--grey-color); }
+
+    .primary-color-text { color: var(--primary-color); }
+    .secondary-color-text { color: var(--secondary-color); }
+    .tertiary-color-text { color: var(--tertiary-color); }
+    .light-accent-color-text { color: var(--light-accent-color); }
+    .white-color-text { color: var(--white-color); }
+    .grey-color-text { color: var(--grey-color); }
+    .nav-text-color { color: var(--nav-text-color); }
+
+    .btn-primary {
+        @apply bg-primary-color-bg text-white-color-text px-4 py-2 rounded-md font-medium hover:bg-tertiary-color-bg transition-colors duration-200;
+    }
+    .btn-secondary {
+        @apply bg-secondary-color-bg text-white-color-text px-4 py-2 rounded-md font-medium hover:bg-primary-color-bg transition-colors duration-200;
+    }
+
+    body {
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+    .ubuntu-bold { font-weight: 700; }
+    .ubuntu-medium { font-weight: 500; }
+    .ubuntu-regular { font-weight: 400; }
+</style>
+</head>
+<body class="bg-white-color-bg ubuntu-regular">
+    <header class="primary-color-bg nav-text-color shadow-md fixed w-full z-50 ubuntu-medium">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <div class="text-3xl ubuntu-bold">
+                <a href="{{ url_for('index') }}">Dhandha</a>
+            </div>
+            <nav class="space-x-4 ubuntu-medium nav-text-color">
+                <a href="{{ url_for('index') }}" class="hover:text-light-accent-color-text">Home</a>
+                <a href="{{ url_for('jobs') }}" class="hover:text-light-accent-color-text">Jobs</a>
+                <a href="{{ url_for('success_stories') }}" class="hover:text-light-accent-color-text">Success Stories</a>
+            </nav>
+            <div class="space-x-4">
+                {% if g.user %}
+                    {% if g.user.is_admin %}
+                        <a href="{{ url_for('admin_dashboard') }}" class="btn-secondary">Admin Dashboard</a>
+                    {% elif g.user.is_agency %}
+                        <a href="{{ url_for('agency_dashboard') }}" class="btn-secondary">Agency Dashboard</a>
+                        <a href="{{ url_for('post_job') }}" class="btn-primary">Post a Job</a>
+                    {% else %}
+                        <a href="{{ url_for('my_applications') }}" class="btn-secondary">My Applications</a>
+                        <a href="{{ url_for('user_profile') }}" class="btn-secondary">Profile</a>
+                    {% endif %}
+                    <a href="{{ url_for('logout') }}" class="btn-primary">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn-secondary">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn-primary">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="max-w-4xl mx-auto px-6 mb-4">
+                    {% for category, message in messages %}
+                        <div class="p-3 rounded-md {% if category == 'success' %}bg-green-100 text-green-700{% elif category == 'error' %}bg-red-100 text-red-700{% else %}bg-blue-100 text-blue-700{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block footer %}
+        <footer class="primary-color-bg nav-text-color py-6 mt-12 ubuntu-regular">
+            <div class="container mx-auto px-6 text-center space-y-2">
+                <p>&copy; 2024 Dhandha. All rights reserved.</p>
+                <p>Phone: <a href="tel:+8801862251359" class="hover:text-light-accent-color-text">+8801862-251359</a></p>
+                <p>Email: <a href="mailto:dhandha.bd@gmail.com" class="hover:text-light-accent-color-text">dhandha.bd@gmail.com</a></p>
+            </div>
+        </footer>
+    {% endblock %}
+</body>
+</html>

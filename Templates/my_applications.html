@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block title %}My Applications{% endblock %}
+{% block content %}
+<div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl md:text-5xl font-bold text-primary-color text-center mb-12 ubuntu-bold">My Applications & Bookmarks</h1>
+    <div class="space-y-6">
+        {% if applications %}
+            {% for app in applications %}
+            <div class="bg-light-accent-color rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-primary-color ubuntu-bold">{{ app.job_title }}</h2>
+                        <p class="text-grey-color text-sm ubuntu-regular">Date: {{ app.applied_at.strftime('%Y-%m-%d') }}</p>
+                    </div>
+                    <span class="px-4 py-1 rounded-full text-sm font-medium 
+                        {% if app.status == 'Approved' or app.status == 'applied' %}
+                            bg-green-500 text-white
+                        {% elif app.status == 'Rejected' %}
+                            bg-red-500 text-white
+                        {% elif app.status == 'Pending' or app.status == 'Bookmarked' %}
+                            bg-blue-500 text-white
+                        {% endif %}">
+                        {{ app.status | capitalize }}
+                    </span>
+                </div>
+                <div class="mt-4">
+                    <p class="text-grey-color ubuntu-regular"><strong>Company:</strong> {{ app.agency }}</p>
+                    <p class="text-grey-color ubuntu-regular"><strong>Job ID:</strong> {{ app.job_id }}</p>
+                </div>
+                {% if app.status == 'Bookmarked' %}
+                <div class="mt-4 flex space-x-2">
+                    <form action="{{ url_for('apply_job', job_id=app.job_id) }}" method="get" class="w-full">
+                        <button type="submit" class="btn-primary w-full">Apply Now</button>
+                    </form>
+                    <form action="{{ url_for('remove_bookmark', job_id=app.job_id) }}" method="post" class="w-full">
+                        <button type="submit" class="btn-secondary w-full">Remove Bookmark</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-lg text-grey-color ubuntu-regular">You have no applications or bookmarks yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

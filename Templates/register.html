@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="container mx-auto px-6 py-12">
+    <div class="max-w-lg mx-auto bg-light-accent-color rounded-lg shadow-md p-8">
+        <h1 class="text-3xl font-bold text-center text-primary-color mb-6 ubuntu-bold">Register</h1>
+        <form action="{{ url_for('register') }}" method="post" class="space-y-4">
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" id="is_agency" name="is_agency" class="rounded text-primary-color">
+                <label for="is_agency" class="text-sm font-medium text-grey-color ubuntu-regular">Register as Agency</label>
+            </div>
+            <div>
+                <label for="username" class="block text-sm font-medium text-grey-color ubuntu-regular">Username</label>
+                <input type="text" id="username" name="username" class="mt-1 block w-full rounded-md border-grey-color shadow-sm" required>
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-grey-color ubuntu-regular">Email Address</label>
+                <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-grey-color shadow-sm" required>
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-grey-color ubuntu-regular">Password</label>
+                <input type="password" id="password" name="password" class="mt-1 block w-full rounded-md border-grey-color shadow-sm" required>
+            </div>
+            <div id="user-fields">
+                <div>
+                    <label for="firstname" class="block text-sm font-medium text-grey-color ubuntu-regular">First Name</label>
+                    <input type="text" id="firstname" name="firstname" class="mt-1 block w-full rounded-md border-grey-color shadow-sm">
+                </div>
+                <div>
+                    <label for="lastname" class="block text-sm font-medium text-grey-color ubuntu-regular">Last Name</label>
+                    <input type="text" id="lastname" name="lastname" class="mt-1 block w-full rounded-md border-grey-color shadow-sm">
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-grey-color ubuntu-regular">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="mt-1 block w-full rounded-md border-grey-color shadow-sm">
+                </div>
+            </div>
+            <div id="agency-fields" class="hidden">
+                <div>
+                    <label for="company_name" class="block text-sm font-medium text-grey-color ubuntu-regular">Company Name</label>
+                    <input type="text" id="company_name" name="company_name" class="mt-1 block w-full rounded-md border-grey-color shadow-sm">
+                </div>
+                <div>
+                    <label for="trade_license" class="block text-sm font-medium text-grey-color ubuntu-regular">Trade License Number</label>
+                    <input type="text" id="trade_license" name="trade_license" class="mt-1 block w-full rounded-md border-grey-color shadow-sm">
+                </div>
+            </div>
+            <button type="submit" class="btn-primary w-full ubuntu-medium">Register</button>
+        </form>
+        <p class="mt-4 text-center text-grey-color ubuntu-regular">Already have an account? <a href="{{ url_for('login') }}" class="text-secondary-color hover:underline">Login here</a></p>
+    </div>
+</div>
+<script>
+    const isAgencyCheckbox = document.getElementById('is_agency');
+    const userFields = document.getElementById('user-fields');
+    const agencyFields = document.getElementById('agency-fields');
+
+    isAgencyCheckbox.addEventListener('change', (event) => {
+        if (event.target.checked) {
+            userFields.classList.add('hidden');
+            agencyFields.classList.remove('hidden');
+        } else {
+            userFields.classList.remove('hidden');
+            agencyFields.classList.add('hidden');
+        }
+    });
+</script>
+{% endblock %}
+

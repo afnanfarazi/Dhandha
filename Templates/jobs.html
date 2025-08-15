@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block title %}Jobs{% endblock %}
+{% block content %}
+<div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl md:text-5xl font-bold text-primary-color text-center mb-12 ubuntu-bold">Current Job Listings</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for job in jobs %}
+        <div class="block bg-light-accent-color rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300">
+            <a href="{{ url_for('job_details', job_id=job.id) }}" class="block">
+                <h2 class="text-xl font-bold text-primary-color mb-2 ubuntu-bold">{{ job.title }}</h2>
+                <p class="text-grey-color text-sm mb-4 ubuntu-regular">Posted by: <span class="font-semibold">{{ job.posted_by }}</span></p>
+                <div class="flex items-center text-grey-color mb-2">
+                    <i class="fas fa-map-marker-alt mr-2"></i>
+                    <p class="text-lg font-medium ubuntu-medium">{{ job.country }}</p>
+                </div>
+                <div class="flex items-center text-grey-color">
+                    <i class="fas fa-calendar-alt mr-2"></i>
+                    <p class="text-sm ubuntu-regular">Deadline: {{ job.deadline }}</p>
+                </div>
+            </a>
+            
+            {% if g.user and not g.user['is_agency'] and not g.user['is_admin'] %}
+            <div class="mt-4 flex space-x-2">
+                {% if job.user_application_status == 'applied' %}
+                <button class="btn-primary w-full opacity-50 cursor-not-allowed" disabled>Applied</button>
+                {% elif job.user_bookmark_status == 'bookmarked' %}
+                <button class="btn-primary w-full opacity-50 cursor-not-allowed" disabled>Bookmarked</button>
+                <form action="{{ url_for('apply_job', job_id=job.id) }}" method="post" class="w-full">
+                    <button type="submit" class="btn-secondary w-full">Apply Now</button>
+                </form>
+                {% else %}
+                <form action="{{ url_for('apply_job', job_id=job.id) }}" method="post" class="w-full">
+                    <button type="submit" class="btn-primary w-full">Apply</button>
+                </form>
+                <form action="{{ url_for('bookmark_job', job_id=job.id) }}" method="post" class="w-full">
+                    <button type="submit" class="btn-secondary w-full">Bookmark</button>
+                </form>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <p class="text-center text-lg text-grey-color col-span-full ubuntu-regular">No job listings are available at the moment. Please check back later!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

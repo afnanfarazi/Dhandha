@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<!-- Full-screen sections container -->
+<div class="space-y-0">
+    <div class="h-20"></div> <!-- This acts as a buffer for the fixed header -->
+    
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center text-center text-white relative bg-cover bg-center" style="background-image: url('https://i.imghippo.com/files/bl2713Mk.jpg');">
+        <div class="absolute inset-0 bg-tertiary-color-bg opacity-90"></div>
+        <div class="relative z-10 p-6 max-w-2xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-extrabold ubuntu-bold mb-4">Find Your Dream Job</h1>
+            <p class="text-lg md:text-xl poppins-regular">Connect with top-tier agencies and discover opportunities that match your passion and skills.</p>
+        </div>
+    </section>
+
+    <!-- Verified Listings Section -->
+    <section class="min-h-screen flex items-center justify-center text-center text-white relative bg-cover bg-center" style="background-image: url('https://i.imghippo.com/files/aaX3918gs.jpg');">
+        <div class="absolute inset-0 bg-tertiary-color-bg opacity-90"></div>
+        <div class="relative z-10 p-6 max-w-2xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-extrabold ubuntu-bold mb-4">Verified Listings</h2>
+            <p class="text-lg md:text-xl poppins-regular">All agencies are vetted and approved by our admins to ensure every job is legitimate and secure.</p>
+        </div>
+    </section>
+
+    <!-- Real-Time Notifications Section -->
+    <section class="min-h-screen flex items-center justify-center text-center text-white relative bg-cover bg-center" style="background-image: url('https://i.imghippo.com/files/Gqds5275Kwk.jpg');">
+        <div class="absolute inset-0 bg-tertiary-color-bg opacity-90"></div>
+        <div class="relative z-10 p-6 max-w-2xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-extrabold ubuntu-bold mb-4">Real-Time Notifications</h2>
+            <p class="text-lg md:text-xl poppins-regular">Get instant alerts on new job openings, application deadlines, and important updates directly in the app.</p>
+        </div>
+    </section>
+
+    <!-- Smart Recommendations Section -->
+    <section class="min-h-screen flex items-center justify-center text-center text-white relative bg-cover bg-center" style="background-image: url('https://i.imghippo.com/files/tO9944yfY.jpg');">
+        <div class="absolute inset-0 bg-tertiary-color-bg opacity-90"></div>
+        <div class="relative z-10 p-6 max-w-2xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-extrabold ubuntu-bold mb-4">Smart Recommendations</h2>
+            <p class="text-lg md:text-xl poppins-regular">Our system suggests jobs that match your skills and interests, helping you find the perfect opportunity faster.</p>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<footer class="primary-color-bg nav-text-color py-6 mt-12">
+    <div class="container mx-auto px-6 text-center space-y-2">
+        <p>&copy; 2024 Dhandha. All rights reserved.</p>
+        <p>Phone: <a href="tel:+8801862251359" class="hover:text-light-accent-color-text">+8801862-251359</a></p>
+        <p>Email: <a href="mailto:dhandha.bd@gmail.com" class="hover:text-light-accent-color-text">dhandha.bd@gmail.com</a></p>
+    </div>
+</footer>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title %}Job Applications{% endblock %}
+{% block content %}
+<div class="container mx-auto px-6 py-12">
+    <h1 class="text-3xl font-bold text-primary-color text-center mb-10 ubuntu-bold">Applications for: {{ job_title }}</h1>
+
+    {% if applications %}
+    <div class="space-y-6">
+        {% for application in applications %}
+        <div class="bg-white rounded-lg shadow-md p-6 border border-light-accent-color">
+            <h2 class="text-xl font-semibold text-tertiary-color mb-1 ubuntu-medium">{{ application.name }}</h2>
+            <p class="text-sm text-grey-color poppins-regular mb-2">Applied on: {{ application.applied_at.strftime('%Y-%m-%d') }}</p>
+            <p class="text-grey-color poppins-regular">Email: {{ application.email }}</p>
+            <p class="text-grey-color poppins-regular">Contact: {{ application.contact }}</p>
+            <p class="text-sm font-semibold mt-2">Status: {{ application.status }}</p>
+            <div class="mt-4 flex space-x-2">
+                <a href="{{ url_for('uploaded_file', filename=application.cv_path) }}" target="_blank" class="btn-secondary">View CV</a>
+                {% if application.status == 'Pending' %}
+                <a href="{{ url_for('approve_application', application_id=application.id) }}" class="bg-green-500 text-white px-4 py-2 rounded-md font-medium hover:bg-green-600 transition-colors duration-200">Approve</a>
+                <a href="{{ url_for('reject_application', application_id=application.id) }}" class="bg-red-500 text-white px-4 py-2 rounded-md font-medium hover:bg-red-600 transition-colors duration-200">Reject</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center text-grey-color ubuntu-regular">No applications have been submitted for this job yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
